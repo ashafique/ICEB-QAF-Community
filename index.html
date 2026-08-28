@@ -7,18 +7,20 @@
 <meta name="description" content="Qaf Community — the learning arm of the Islamic Center of East Brunswick. Launching Fall 2026. Community Lived Intentionally.">
 <meta property="og:title" content="Qaf Community — Coming Soon">
 <meta property="og:description" content="Find your circle. Deepen your faith. Launching Fall 2026 at the Islamic Center of East Brunswick.">
-<meta name="theme-color" content="#0e2a1f">
+<meta name="theme-color" content="#0a231a">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital@0;1&family=Inter:wght@400;500&family=Amiri&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0e2a1f;
-    --bg2: #16382a;
+    --bg: #0a231a;
+    --bg2: #123527;
     --ink: #f4efe6;
-    --ink-muted: #b9c7be;
+    --ink-muted: #aebfb4;
+    --ink-faint: #74897d;
     --gold: #b8935a;
     --gold-bright: #e8c88a;
+    --hairline: rgba(184, 147, 90, 0.28);
     --serif: "Cormorant Garamond", Georgia, serif;
     --sans: Inter, system-ui, sans-serif;
     --arabic: Amiri, serif;
@@ -29,14 +31,52 @@
     min-height: 100svh;
     display: grid;
     place-items: center;
-    background: radial-gradient(120% 90% at 50% -10%, var(--bg2) 0%, var(--bg) 60%);
+    background:
+      radial-gradient(90vmin 70vmin at 50% 12%, rgba(184,147,90,0.10), transparent 65%),
+      radial-gradient(140% 110% at 50% -20%, var(--bg2) 0%, var(--bg) 58%);
     color: var(--ink);
     font-family: var(--sans);
     text-align: center;
-    padding: 3rem 1.5rem calc(3rem + env(safe-area-inset-bottom));
+    padding: clamp(2.5rem, 6vh, 5rem) 1.5rem calc(2.5rem + env(safe-area-inset-bottom));
+    overflow-x: hidden;
+    position: relative;
   }
-  main { max-width: 34rem; }
-  .mark { width: min(58vw, 15rem); margin-inline: auto; }
+  /* ---------- ambient layers ---------- */
+  .pattern {
+    position: fixed; inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
+    /* soft-fade the tiling toward the centre so the mark owns the middle */
+    -webkit-mask-image: radial-gradient(85vmin 70vmin at 50% 42%, transparent 30%, #000 78%);
+    mask-image: radial-gradient(85vmin 70vmin at 50% 42%, transparent 30%, #000 78%);
+  }
+  .grain {
+    position: fixed; inset: 0;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .vignette {
+    position: fixed; inset: 0;
+    background: radial-gradient(120% 100% at 50% 45%, transparent 55%, rgba(4, 14, 10, 0.55) 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  main { position: relative; z-index: 2; max-width: 40rem; }
+
+  /* ---------- the mark ---------- */
+  .mark-wrap { position: relative; width: min(56vw, 15.5rem); margin-inline: auto; }
+  .mark-wrap::before {
+    content: "";
+    position: absolute; inset: -22%;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(232,200,138,0.16), transparent 70%);
+    animation: breathe 7s ease-in-out infinite;
+  }
+  @keyframes breathe { 50% { opacity: 0.45; } }
+  .mark { position: relative; width: 100%; display: block; }
   .ring, .knot {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
@@ -46,70 +86,165 @@
   .weave { opacity: 0; animation: fadein 800ms linear 900ms forwards; }
   .qaf-letter {
     font-family: var(--arabic);
-    fill: var(--gold);
-    font-size: 50px;
+    fill: var(--gold-bright);
+    font-size: 46px;
     opacity: 0;
     animation: fadein 900ms ease-out 1600ms forwards;
   }
   @keyframes draw { to { stroke-dashoffset: 0; } }
   @keyframes fadein { to { opacity: 1; } }
-  .rise { opacity: 0; transform: translateY(14px); animation: rise 720ms cubic-bezier(.16,1,.3,1) forwards; }
+
+  /* ---------- entrance ---------- */
+  .rise { opacity: 0; transform: translateY(16px); animation: rise 780ms cubic-bezier(.16,1,.3,1) forwards; }
   @keyframes rise { to { opacity: 1; transform: none; } }
-  .d1 { animation-delay: 2200ms; } .d2 { animation-delay: 2350ms; }
-  .d3 { animation-delay: 2500ms; } .d4 { animation-delay: 2650ms; }
-  .d5 { animation-delay: 2800ms; } .d6 { animation-delay: 3000ms; }
+  .d1 { animation-delay: 2100ms; } .d2 { animation-delay: 2260ms; }
+  .d3 { animation-delay: 2420ms; } .d4 { animation-delay: 2580ms; }
+  .d5 { animation-delay: 2760ms; } .d6 { animation-delay: 2960ms; }
+  .d7 { animation-delay: 3200ms; }
+
+  /* ---------- type ---------- */
   .eyebrow {
-    font-size: .68rem;
-    font-weight: 500;
-    letter-spacing: .28em;
-    text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 1rem;
+    font-size: .66rem; font-weight: 500;
+    letter-spacing: .32em; text-transform: uppercase;
     color: var(--gold);
-    margin-top: 2.5rem;
+    margin-top: 2.8rem;
+  }
+  .eyebrow::before, .eyebrow::after {
+    content: ""; display: block; width: 2.6rem; height: 1px; background: var(--hairline);
   }
   h1 {
     font-family: var(--serif);
     font-weight: 400;
     font-variant-caps: small-caps;
-    letter-spacing: .08em;
-    font-size: clamp(2.6rem, 9vw, 4.2rem);
-    line-height: 1.02;
-    margin-top: .75rem;
-  }
-  .rule { display: flex; align-items: center; justify-content: center; gap: .8rem; margin-top: 1.6rem; }
-  .rule span { display: block; width: 4rem; height: 1px; background: color-mix(in srgb, var(--gold) 45%, transparent); }
-  .rule i { width: 6px; height: 6px; background: var(--gold); transform: rotate(45deg); }
-  .tagline { font-family: var(--serif); font-style: italic; font-size: 1.25rem; margin-top: 1.6rem; color: var(--ink); }
-  .season { font-size: .74rem; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-muted); margin-top: 1.1rem; }
-  .count {
-    margin-top: 2.2rem;
-    font-variant-numeric: tabular-nums;
-    font-size: .84rem;
     letter-spacing: .06em;
-    color: var(--ink-muted);
-    min-height: 1.4rem;
+    font-size: clamp(3rem, 11vw, 5.4rem);
+    line-height: 1;
+    margin-top: .9rem;
+    text-shadow: 0 2px 40px rgba(0,0,0,.35);
   }
-  .count b { color: var(--gold-bright); font-weight: 500; }
-  .dates {
-    margin-top: 2.4rem;
+  .tagline {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+    margin-top: 1.4rem; color: var(--ink);
+    opacity: .95;
+  }
+  .season {
+    font-size: .72rem; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--ink-muted); margin-top: 1.15rem;
+  }
+
+  /* ---------- countdown ---------- */
+  .count-label {
+    margin-top: 3rem;
+    font-size: .66rem; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .count {
+    margin-top: 1.1rem;
+    display: inline-grid;
+    grid-auto-flow: column;
+    align-items: stretch;
+  }
+  .cell { padding: 0 clamp(.9rem, 3.5vw, 1.6rem); }
+  .cell + .cell { border-left: 1px solid var(--hairline); }
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-weight: 400;
+    font-size: clamp(2rem, 7vw, 3.1rem);
+    line-height: 1.1;
+    color: var(--gold-bright);
+    font-family: var(--serif);
+  }
+  .unit {
+    margin-top: .3rem;
+    font-size: .58rem; letter-spacing: .24em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .launched {
+    margin-top: 1.2rem;
+    font-family: var(--serif); font-style: italic; font-size: 1.4rem;
+    color: var(--gold-bright);
+  }
+
+  /* ---------- timeline ---------- */
+  .timeline {
+    margin: 3.4rem auto 0;
     display: grid;
-    gap: .55rem;
-    font-size: .82rem;
-    color: var(--ink-muted);
+    gap: 0;
+    max-width: 21rem;
+    text-align: left;
   }
-  .dates div b { color: var(--ink); font-weight: 500; }
-  .foot { margin-top: 3rem; display: grid; gap: .8rem; }
-  .foot a { color: var(--gold); text-decoration: none; font-size: .82rem; letter-spacing: .04em; }
-  .foot a:hover { text-decoration: underline; text-underline-offset: 4px; }
-  .powered { font-size: .62rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); opacity: .8; }
+  .stop {
+    display: grid;
+    grid-template-columns: 1rem 1fr;
+    gap: 1rem;
+    position: relative;
+    padding-bottom: 1.35rem;
+  }
+  .stop:last-child { padding-bottom: 0; }
+  .stop::before {
+    content: "";
+    position: absolute; left: calc(.5rem - .5px); top: 1.05rem; bottom: -0.05rem;
+    width: 1px; background: var(--hairline);
+  }
+  .stop:last-child::before { display: none; }
+  .stop i {
+    width: 7px; height: 7px; background: var(--gold);
+    transform: rotate(45deg);
+    margin: .42rem auto 0;
+  }
+  .stop .when {
+    font-size: .64rem; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .stop .what {
+    font-family: var(--serif);
+    font-size: 1.18rem;
+    margin-top: .18rem;
+    color: var(--ink);
+  }
+  .stop .sub { font-size: .78rem; color: var(--ink-faint); margin-top: .12rem; }
+
+  /* ---------- footer ---------- */
+  .foot { margin-top: 3.6rem; display: grid; gap: .9rem; justify-items: center; }
+  .foot .sep { width: 2.4rem; height: 1px; background: var(--hairline); }
+  .foot a {
+    color: var(--ink-muted); text-decoration: none;
+    font-size: .78rem; letter-spacing: .08em;
+    transition: color .3s;
+  }
+  .foot a:hover { color: var(--gold-bright); }
+  .powered {
+    font-size: .6rem; letter-spacing: .26em; text-transform: uppercase;
+    color: var(--gold); opacity: .75;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ring, .knot { animation: none; stroke-dashoffset: 0; }
     .weave, .qaf-letter, .rise { animation: none; opacity: 1; transform: none; }
+    .watermark, .mark-wrap::before { animation: none; }
   }
 </style>
 </head>
 <body>
+<svg class="pattern" aria-hidden="true">
+  <defs>
+    <pattern id="isl" width="120" height="120" patternUnits="userSpaceOnUse">
+      <rect x="31.72" y="31.72" width="56.57" height="56.57" transform="rotate(0 60.0 60.0)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><rect x="31.72" y="31.72" width="56.57" height="56.57" transform="rotate(45 60.0 60.0)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><polygon points="66.93,62.87 62.87,66.93 57.13,66.93 53.07,62.87 53.07,57.13 57.13,53.07 62.87,53.07 66.93,57.13" fill="none" stroke="rgba(184,147,90,0.08)" stroke-width="1"/><rect x="-28.28" y="-28.28" width="56.57" height="56.57" transform="rotate(0 0 0)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><rect x="-28.28" y="-28.28" width="56.57" height="56.57" transform="rotate(45 0 0)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><polygon points="6.93,2.87 2.87,6.93 -2.87,6.93 -6.93,2.87 -6.93,-2.87 -2.87,-6.93 2.87,-6.93 6.93,-2.87" fill="none" stroke="rgba(184,147,90,0.08)" stroke-width="1"/><rect x="91.72" y="-28.28" width="56.57" height="56.57" transform="rotate(0 120 0)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><rect x="91.72" y="-28.28" width="56.57" height="56.57" transform="rotate(45 120 0)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><polygon points="126.93,2.87 122.87,6.93 117.13,6.93 113.07,2.87 113.07,-2.87 117.13,-6.93 122.87,-6.93 126.93,-2.87" fill="none" stroke="rgba(184,147,90,0.08)" stroke-width="1"/><rect x="-28.28" y="91.72" width="56.57" height="56.57" transform="rotate(0 0 120)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><rect x="-28.28" y="91.72" width="56.57" height="56.57" transform="rotate(45 0 120)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><polygon points="6.93,122.87 2.87,126.93 -2.87,126.93 -6.93,122.87 -6.93,117.13 -2.87,113.07 2.87,113.07 6.93,117.13" fill="none" stroke="rgba(184,147,90,0.08)" stroke-width="1"/><rect x="91.72" y="91.72" width="56.57" height="56.57" transform="rotate(0 120 120)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><rect x="91.72" y="91.72" width="56.57" height="56.57" transform="rotate(45 120 120)" fill="none" stroke="rgba(184,147,90,0.10)" stroke-width="1"/><polygon points="126.93,122.87 122.87,126.93 117.13,126.93 113.07,122.87 113.07,117.13 117.13,113.07 122.87,113.07 126.93,117.13" fill="none" stroke="rgba(184,147,90,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#isl)"/>
+</svg>
+<svg class="grain" aria-hidden="true">
+  <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  <rect width="100%" height="100%" filter="url(#g)"/>
+</svg>
+<div class="vignette" aria-hidden="true"></div>
+
 <main>
-  <svg class="mark" viewBox="0 0 200 200" role="img" aria-label="Qaf Community mark">
+  <div class="mark-wrap">
+    <svg class="mark" viewBox="0 0 200 200" role="img" aria-label="Qaf Community mark">
 <circle class="ring" cx="100" cy="100" r="88" fill="none" stroke="var(--gold)" stroke-width="1.25" pathLength="1000" opacity="0.55"/>
 <path class="knot" d="M 100 12 L 162.225 162.225 L 12 100 L 162.225 37.775 L 100 188 L 37.775 37.775 L 188 100 L 37.775 162.225 Z" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linejoin="miter" stroke-miterlimit="8" pathLength="1000"/>
 <g class="weave">
@@ -131,46 +266,87 @@
 <path d="M 86.412 69.178 L 113.588 57.921" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 86.412 69.178 L 113.588 57.921" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
 </g>
 <circle class="medallion" cx="100" cy="100" r="33.68" fill="var(--bg)"/>
-    <text class="qaf-letter" x="100" y="100" text-anchor="middle" dominant-baseline="central">ق</text>
-  </svg>
+      <text class="qaf-letter" x="100" y="100" text-anchor="middle" dominant-baseline="central">ق</text>
+    </svg>
+  </div>
 
   <p class="eyebrow rise d1">Coming soon to East Brunswick</p>
   <h1 class="rise d2">Qaf Community</h1>
-  <div class="rule rise d3" aria-hidden="true"><span></span><i></i><span></span></div>
   <p class="tagline rise d3">Community Lived Intentionally</p>
-  <p class="season rise d4">Fall 2026 · Sep 5 — Dec 20</p>
-  <p class="count rise d4" id="count" aria-live="off"></p>
+  <p class="season rise d4">Fall 2026 &middot; September 5 — December 20</p>
 
-  <div class="dates rise d5">
-    <div><b>Sat Sep 5</b> · Launch at the Community BBQ</div>
-    <div><b>Fri Sep 11</b> · Opening program — Niyyah</div>
-    <div><b>Sun Sep 13</b> · First full week of classes</div>
+  <p class="count-label rise d5" id="count-label">Until the Community BBQ</p>
+  <div class="count rise d5" id="count" role="timer" aria-live="off">
+    <div class="cell"><div class="num" id="n-d">–</div><div class="unit">Days</div></div>
+    <div class="cell"><div class="num" id="n-h">–</div><div class="unit">Hours</div></div>
+    <div class="cell"><div class="num" id="n-m">–</div><div class="unit">Minutes</div></div>
+    <div class="cell"><div class="num" id="n-s">–</div><div class="unit">Seconds</div></div>
+  </div>
+  <p class="launched rise" id="launched" hidden>We have launched — see you at ICEB.</p>
+
+  <div class="timeline rise d6">
+    <div class="stop">
+      <i></i>
+      <div>
+        <div class="when">Sat &middot; September 5</div>
+        <div class="what">Launch at the Community BBQ</div>
+        <div class="sub">Meet the teachers, see the full slate, sign up on the spot.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <i></i>
+      <div>
+        <div class="when">Fri &middot; September 11</div>
+        <div class="what">Opening Program — Niyyah</div>
+        <div class="sub">Building a community of intentionality.</div>
+      </div>
+    </div>
+    <div class="stop">
+      <i></i>
+      <div>
+        <div class="when">Sun &middot; September 13</div>
+        <div class="what">First Full Week of Classes</div>
+        <div class="sub">Sixteen circles across six days. Every class open to all.</div>
+      </div>
+    </div>
   </div>
 
-  <div class="foot rise d6">
-    <a href="https://instagram.com/qafcommunity" rel="noopener">@qafcommunity</a>
+  <div class="foot rise d7">
+    <div class="sep"></div>
     <a href="https://www.icebnj.net" rel="noopener">icebnj.net</a>
     <p class="powered">Powered by the Islamic Center of East Brunswick</p>
   </div>
 </main>
+
 <script>
   // Milestones as fixed UTC instants (Eastern Daylight Time = UTC-4 in September).
   var milestones = [
-    { at: Date.UTC(2026, 8, 5, 21, 0, 0), label: "Community BBQ" },      // Sep 5, 5:00 PM ET
-    { at: Date.UTC(2026, 8, 11, 22, 0, 0), label: "Opening program" },   // Sep 11, 6:00 PM ET
-    { at: Date.UTC(2026, 8, 13, 13, 0, 0), label: "First classes" }      // Sep 13, 9:00 AM ET
+    { at: Date.UTC(2026, 8, 5, 21, 0, 0), label: "Until the Community BBQ" },
+    { at: Date.UTC(2026, 8, 11, 22, 0, 0), label: "Until the Opening Program" },
+    { at: Date.UTC(2026, 8, 13, 13, 0, 0), label: "Until classes begin" }
   ];
-  var el = document.getElementById("count");
+  var byId = function (id) { return document.getElementById(id); };
+  var pad = function (n) { return String(n).padStart(2, "0"); };
   function tick() {
     var now = Date.now(), next = null;
     for (var i = 0; i < milestones.length; i++) {
       if (milestones[i].at > now) { next = milestones[i]; break; }
     }
-    if (!next) { el.innerHTML = "<b>We have launched</b> — see you at ICEB"; return; }
+    if (!next) {
+      byId("count").hidden = true;
+      byId("count-label").hidden = true;
+      var l = byId("launched");
+      l.hidden = false;
+      l.classList.add("d5");
+      return;
+    }
+    byId("count-label").textContent = next.label;
     var ms = next.at - now;
-    var d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
-    el.innerHTML = "<b>" + next.label + "</b> in " + d + "d " + h + "h " + m + "m";
-    setTimeout(tick, 30000);
+    byId("n-d").textContent = Math.floor(ms / 864e5);
+    byId("n-h").textContent = pad(Math.floor(ms % 864e5 / 36e5));
+    byId("n-m").textContent = pad(Math.floor(ms % 36e5 / 6e4));
+    byId("n-s").textContent = pad(Math.floor(ms % 6e4 / 1e3));
+    setTimeout(tick, 1000);
   }
   tick();
 </script>
