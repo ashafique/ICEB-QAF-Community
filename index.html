@@ -76,31 +76,36 @@
     animation: breathe 7s ease-in-out infinite;
   }
   @keyframes breathe { 50% { opacity: 0.45; } }
-  .mark { position: relative; width: 100%; display: block; }
-  .ring, .knot {
-    stroke-dasharray: 1000;
-    stroke-dashoffset: 1000;
-    animation: draw 3200ms cubic-bezier(.37,0,.19,1) forwards;
-  }
-  .ring { animation-duration: 1400ms; animation-delay: 2000ms; }
-  .weave { opacity: 0; animation: fadein 800ms linear 900ms forwards; }
-  .qaf-letter {
-    font-family: var(--arabic);
-    fill: var(--gold-bright);
-    font-size: 46px;
+  .mark {
+    position: relative; width: 100%; height: auto; display: block;
+    /* the rosette is revealed from the qaf outward — petal ring by petal
+       ring, the gold circle arriving last — like the knot being drawn */
+    -webkit-mask-image: radial-gradient(circle, #000 64%, transparent 71%);
+    mask-image: radial-gradient(circle, #000 64%, transparent 71%);
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center;
+    -webkit-mask-size: 0% 0%; mask-size: 0% 0%;
+    animation:
+      unfurl 3400ms cubic-bezier(.3,.1,.2,1) 400ms forwards,
+      sharpen 2400ms ease-out 400ms forwards;
     opacity: 0;
-    animation: fadein 900ms ease-out 1600ms forwards;
+    filter: blur(6px);
   }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes unfurl {
+    0%   { opacity: 0; -webkit-mask-size: 0% 0%; mask-size: 0% 0%; }
+    6%   { opacity: 1; }
+    100% { opacity: 1; -webkit-mask-size: 165% 165%; mask-size: 165% 165%; }
+  }
+  @keyframes sharpen { to { filter: blur(0); } }
   @keyframes fadein { to { opacity: 1; } }
 
   /* ---------- entrance ---------- */
   .rise { opacity: 0; transform: translateY(16px); animation: rise 780ms cubic-bezier(.16,1,.3,1) forwards; }
   @keyframes rise { to { opacity: 1; transform: none; } }
-  .d1 { animation-delay: 2100ms; } .d2 { animation-delay: 2260ms; }
-  .d3 { animation-delay: 2420ms; } .d4 { animation-delay: 2580ms; }
-  .d5 { animation-delay: 2760ms; } .d6 { animation-delay: 2960ms; }
-  .d7 { animation-delay: 3200ms; }
+  .d1 { animation-delay: 2900ms; } .d2 { animation-delay: 3060ms; }
+  .d3 { animation-delay: 3220ms; } .d4 { animation-delay: 3380ms; }
+  .d5 { animation-delay: 3560ms; } .d6 { animation-delay: 3760ms; }
+  .d7 { animation-delay: 4000ms; }
 
   /* ---------- type ---------- */
   .eyebrow {
@@ -221,9 +226,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ring, .knot { animation: none; stroke-dashoffset: 0; }
-    .weave, .qaf-letter, .rise { animation: none; opacity: 1; transform: none; }
-    .watermark, .mark-wrap::before { animation: none; }
+    .mark { animation: none; opacity: 1; filter: none;
+            -webkit-mask-image: none; mask-image: none; }
+    .rise { animation: none; opacity: 1; transform: none; }
+    .mark-wrap::before { animation: none; }
   }
 </style>
 </head>
@@ -244,30 +250,8 @@
 
 <main>
   <div class="mark-wrap">
-    <svg class="mark" viewBox="0 0 200 200" role="img" aria-label="Qaf Community mark">
-<circle class="ring" cx="100" cy="100" r="88" fill="none" stroke="var(--gold)" stroke-width="1.25" pathLength="1000" opacity="0.55"/>
-<path class="knot" d="M 100 12 L 162.225 162.225 L 12 100 L 162.225 37.775 L 100 188 L 37.775 37.775 L 188 100 L 37.775 162.225 Z" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linejoin="miter" stroke-miterlimit="8" pathLength="1000"/>
-<g class="weave">
-<path d="M 130.822 86.412 L 142.079 113.588" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 130.822 86.412 L 142.079 113.588" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 157.588 112.597 L 130.412 123.854" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 157.588 112.597 L 130.412 123.854" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 112.597 42.412 L 123.854 69.588" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 112.597 42.412 L 123.854 69.588" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 112.186 68.597 L 139.363 79.854" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 112.186 68.597 L 139.363 79.854" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 131.403 112.186 L 120.146 139.363" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 131.403 112.186 L 120.146 139.363" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 131.814 149.628 L 104.637 138.372" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 131.814 149.628 L 104.637 138.372" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 149.628 68.186 L 138.372 95.363" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 149.628 68.186 L 138.372 95.363" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 113.588 130.822 L 86.412 142.079" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 113.588 130.822 L 86.412 142.079" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 87.403 157.588 L 76.146 130.412" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 87.403 157.588 L 76.146 130.412" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 87.814 131.403 L 60.637 120.146" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 87.814 131.403 L 60.637 120.146" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 50.372 131.814 L 61.628 104.637" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 50.372 131.814 L 61.628 104.637" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 69.178 113.588 L 57.921 86.412" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 69.178 113.588 L 57.921 86.412" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 42.412 87.403 L 69.588 76.146" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 42.412 87.403 L 69.588 76.146" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 68.597 87.814 L 79.854 60.637" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 68.597 87.814 L 79.854 60.637" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 68.186 50.372 L 95.363 61.628" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 68.186 50.372 L 95.363 61.628" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-<path d="M 86.412 69.178 L 113.588 57.921" fill="none" stroke="var(--bg)" stroke-width="13" stroke-linecap="butt"/><path d="M 86.412 69.178 L 113.588 57.921" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="butt"/>
-</g>
-<circle class="medallion" cx="100" cy="100" r="33.68" fill="var(--bg)"/>
-      <text class="qaf-letter" x="100" y="100" text-anchor="middle" dominant-baseline="central">ق</text>
-    </svg>
+    <img class="mark" src="qaf-logo.png" width="640" height="640"
+         alt="Qaf Community — interlaced geometric rosette with the letter qaf at its heart">
   </div>
 
   <p class="eyebrow rise d1">Coming soon to East Brunswick</p>
