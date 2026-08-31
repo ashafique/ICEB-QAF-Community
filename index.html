@@ -172,6 +172,82 @@
   .foot a:hover { color: var(--ember-deep); }
   .powered { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--qaf-soft); opacity: .7; }
 
+
+  /* ---------------- the annotated diagram (desktop) ---------------- */
+  .diagram-wrap { display: none; }
+  @media (min-width: 900px) {
+    .diagram-wrap { display: block; margin-top: 1.6rem; }
+    .stations, .stations-caption { display: none; }
+  }
+  .diagram {
+    position: relative;
+    max-width: 54rem;
+    margin-inline: auto;
+    aspect-ratio: 1.18 / 1;
+  }
+  .diagram .mark-box { position: absolute; }
+  .diagram .mark-base, .diagram .mark-lit {
+    position: absolute; inset: 0; width: 100%; height: auto;
+  }
+  .diagram .mark-base { transition: opacity 520ms ease; }
+  .diagram .mark-lit {
+    opacity: 0;
+    transition: clip-path 640ms cubic-bezier(.22,1,.36,1), opacity 300ms ease;
+  }
+  .diagram.lit .mark-base { opacity: 0.22; }
+  .diagram.lit .mark-lit { opacity: 1; }
+  .diagram svg.wires {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .diagram svg.wires line {
+    stroke: rgba(17, 43, 30, 0.25);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    transition: stroke 300ms;
+  }
+  .diagram svg.wires circle { fill: var(--qaf-soft); transition: fill 300ms; }
+  .diagram svg.wires .ember, .diagram svg.wires line.on { stroke: var(--ember); }
+  .diagram svg.wires circle.ember, .diagram svg.wires circle.on { fill: var(--ember); }
+  .diagram svg.wires line.on { stroke-width: 1.6; }
+  .diagram svg.wires line.slant { stroke: var(--qaf-line); }
+  .diagram svg.wires circle.slant { fill: var(--qaf-soft); }
+
+  .co-callout {
+    position: absolute;
+    display: flex; flex-direction: column; gap: 2px;
+    background: none; border: 0; padding: 0; cursor: pointer;
+    font-family: var(--serif); color: var(--qaf);
+    text-align: left;
+  }
+  .co-callout.left { transform: translate(-100%, -50%); align-items: flex-end; text-align: right; padding-right: 12px; }
+  .co-callout.right { transform: translateY(-50%); align-items: flex-start; padding-left: 12px; }
+  .co-callout.top { transform: translate(-50%, -100%); align-items: center; text-align: center; padding-bottom: 8px; }
+  .co-callout.bottom { transform: translateX(-50%); align-items: center; text-align: center; padding-top: 8px; }
+  .co-head { display: flex; align-items: baseline; gap: 8px; }
+  .co-diamond {
+    width: 16px; height: 16px; background: var(--qaf);
+    transform: rotate(45deg) translateY(1px);
+    display: grid; place-items: center; flex: none;
+  }
+  .co-callout.is-ember .co-diamond { background: var(--ember); }
+  .co-diamond i {
+    transform: rotate(-45deg); font-style: normal;
+    font-size: 9px; color: var(--ivory);
+  }
+  .co-ar { font-family: var(--arabic); font-size: 1.2rem; line-height: 1; }
+  .co-name { font-style: italic; font-size: .92rem; line-height: 1.2; transition: color 300ms; }
+  .co-callout.is-ember .co-name, .co-callout:hover .co-name, .co-callout:focus-visible .co-name { color: var(--ember-deep); }
+  .co-gloss { max-width: 19ch; font-size: .68rem; line-height: 1.35; color: var(--qaf-soft); }
+  .co-slant { position: absolute; width: 17ch; font-size: .66rem; line-height: 1.35; }
+  .co-slant.left { transform: translateX(-100%); text-align: right; }
+  .co-slant em { color: var(--ember-deep); font-style: italic; display: block; }
+  .co-slant span { color: rgba(17, 43, 30, 0.45); }
+  .diagram-caption {
+    margin-top: 2.2rem; text-align: center;
+    font-style: italic; font-size: .84rem; color: var(--qaf-soft);
+  }
+
   @media (max-width: 420px) {
     .station .en { display: none; }
   }
@@ -217,6 +293,65 @@
   </div>
   <p class="stations-caption rise d6">Received at the base, the Word is grasped again at the summit.</p>
 
+  <div class="diagram-wrap rise d6">
+    <figure class="diagram" id="diagram" style="margin:0">
+      <div class="mark-box" style="left:30%;top:26.400000000000002%;width:40%;height:47.199999999999996%">
+        <img class="mark-base" src="qaf-mark.png" width="520" height="520" alt="" aria-hidden="true" loading="lazy">
+        <img class="mark-lit" id="mark-lit" src="qaf-mark.png" width="520" height="520" alt="" aria-hidden="true" loading="lazy">
+      </div>
+      <svg class="wires" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+<line data-for="quran" x1="50" y1="74.2" x2="49.8" y2="67.2"/><circle data-for="quran" cx="49.8" cy="67.2" r="0.55"/>
+<line data-for="qalb" x1="79" y1="59.4" x2="52" y2="51.4"/><circle data-for="qalb" cx="52" cy="51.4" r="0.55"/>
+<line data-for="qabas" x1="21" y1="52.7" x2="48.8" y2="46.7" class="ember"/><circle data-for="qabas" cx="48.8" cy="46.7" r="0.55" class="ember"/>
+<line data-for="qiblah" x1="19" y1="30.5" x2="43.6" y2="41.5"/><circle data-for="qiblah" cx="43.6" cy="41.5" r="0.55"/>
+<line data-for="qanaah" x1="80" y1="43" x2="56.4" y2="42"/><circle data-for="qanaah" cx="56.4" cy="42" r="0.55"/>
+<line data-for="qalam" x1="80" y1="25.7" x2="52" y2="37.7"/><circle data-for="qalam" cx="52" cy="37.7" r="0.55"/>
+<line data-for="quwa" x1="50" y1="23.5" x2="50" y2="32.5"/><circle data-for="quwa" cx="50" cy="32.5" r="0.55"/>
+<line class="slant" x1="15" y1="69.5" x2="43.2" y2="58"/><circle class="slant" cx="43.2" cy="58" r="0.45"/>
+<line class="slant" x1="85" y1="69.5" x2="56.8" y2="58"/><circle class="slant" cx="56.8" cy="58" r="0.45"/>
+      </svg>
+<button type="button" class="co-callout bottom" data-station="quran" data-clip="inset(62% 26% 4% 26% round 14px)" style="left:50%;top:74.2%" aria-label="Station i — Qurʾān: the recited Word, book-shaped at the base">
+  <span class="co-head"><span class="co-diamond"><i>1</i></span><span class="co-ar">قُرآن</span></span>
+  <span class="co-name">Qurʾān</span>
+  <span class="co-gloss">the recited Word, book-shaped at the base</span>
+</button>
+<button type="button" class="co-callout right" data-station="qalb" data-clip="inset(40% 30% 26% 30% round 14px)" style="left:79%;top:59.4%" aria-label="Station ii — Qalb: awakening the heart — communal identity & belonging">
+  <span class="co-head"><span class="co-diamond"><i>2</i></span><span class="co-ar">قَلب</span></span>
+  <span class="co-name">Qalb</span>
+  <span class="co-gloss">awakening the heart — communal identity & belonging</span>
+</button>
+<button type="button" class="co-callout left is-ember" data-station="qabas" data-clip="inset(34% 36% 36% 38% round 14px)" style="left:21%;top:52.7%" aria-label="Station iii — Qabas: preparing & purifying the heart — passionate purpose & activism">
+  <span class="co-head"><span class="co-diamond"><i>3</i></span><span class="co-ar">قَبَس</span></span>
+  <span class="co-name">Qabas</span>
+  <span class="co-gloss">preparing & purifying the heart — passionate purpose & activism</span>
+</button>
+<button type="button" class="co-callout left" data-station="qiblah" data-clip="inset(22% 60% 38% 8% round 14px)" style="left:19%;top:30.5%" aria-label="Station iv — Qiblah: sacred law & outward practice">
+  <span class="co-head"><span class="co-diamond"><i>4</i></span><span class="co-ar">قِبلة</span></span>
+  <span class="co-name">Qiblah · Fiqh</span>
+  <span class="co-gloss">sacred law & outward practice</span>
+</button>
+<button type="button" class="co-callout right" data-station="qanaah" data-clip="inset(22% 8% 38% 60% round 14px)" style="left:80%;top:43%" aria-label="Station v — Qanāʿah: inner peace realized through conviction in belief">
+  <span class="co-head"><span class="co-diamond"><i>5</i></span><span class="co-ar">قَناعة</span></span>
+  <span class="co-name">Qanāʿah · ʿAqīdah</span>
+  <span class="co-gloss">inner peace realized through conviction in belief</span>
+</button>
+<button type="button" class="co-callout right" data-station="qalam" data-clip="inset(20% 30% 52% 40% round 14px)" style="left:80%;top:25.7%" aria-label="Station vi — Qalam: refining reading & writing — the people’s language & culture">
+  <span class="co-head"><span class="co-diamond"><i>6</i></span><span class="co-ar">قَلَم</span></span>
+  <span class="co-name">Qalam</span>
+  <span class="co-gloss">refining reading & writing — the people’s language & culture</span>
+</button>
+<button type="button" class="co-callout top" data-station="quwa" data-clip="inset(6% 36% 78% 36% round 14px)" style="left:50%;top:23.5%" aria-label="Station vii — Quwā: mastery — a return to the Book, empowered to engage the world">
+  <span class="co-head"><span class="co-diamond"><i>7</i></span><span class="co-ar">قُوى</span></span>
+  <span class="co-name">Quwā · Maʿrifah</span>
+  <span class="co-gloss">mastery — a return to the Book, empowered to engage the world</span>
+</button>
+<div class="co-slant left" style="left:14%;top:71%"><em>recitation & memorization</em><span>bottom-left slant</span></div>
+<div class="co-slant right" style="left:86%;top:71%"><em>grammar & morphology (Arabic)</em><span>bottom-right slant</span></div>
+    </figure>
+    <figcaption class="diagram-caption">The two base slants together form the Book · the heart and ember at the core · the crown returns to it, realized</figcaption>
+  </div>
+
+
   <div class="anchor-panel rise d7">
     <div class="row"><span class="when">Sat · Sep 5</span><span class="what">Launch at the Community BBQ</span></div>
     <div class="row"><span class="when">Fri · Sep 11</span><span class="what">Opening program — Niyyah</span></div>
@@ -257,6 +392,31 @@
     setTimeout(tick, 1000);
   }
   tick();
+
+  // Diagram: hovering or focusing a callout lights that station's region.
+  (function () {
+    var fig = document.getElementById("diagram");
+    if (!fig) return;
+    var lit = document.getElementById("mark-lit");
+    fig.querySelectorAll(".co-callout").forEach(function (btn) {
+      var id = btn.getAttribute("data-station");
+      var on = function () {
+        lit.style.clipPath = btn.getAttribute("data-clip");
+        fig.classList.add("lit");
+        fig.querySelectorAll('[data-for]').forEach(function (el) {
+          el.classList.toggle("on", el.getAttribute("data-for") === id);
+        });
+      };
+      var off = function () {
+        fig.classList.remove("lit");
+        fig.querySelectorAll("[data-for].on").forEach(function (el) { el.classList.remove("on"); });
+      };
+      btn.addEventListener("mouseenter", on);
+      btn.addEventListener("mouseleave", off);
+      btn.addEventListener("focus", on);
+      btn.addEventListener("blur", off);
+    });
+  })();
 </script>
 </body>
 </html>
