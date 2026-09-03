@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /t/
+
+Sitemap: https://qaf.icebnj.net/sitemap.xml
