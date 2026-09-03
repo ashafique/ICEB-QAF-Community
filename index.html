@@ -170,6 +170,22 @@
   .foot { margin-top: 3rem; display: grid; gap: .55rem; justify-items: center; }
   .foot a { color: var(--qaf-soft); text-decoration: none; font-size: .85rem; letter-spacing: .05em; }
   .foot a:hover { color: var(--ember-deep); }
+
+  /* Registration — the one action on the page. */
+  .cta-wrap { margin-top: 2.4rem; display: grid; gap: .7rem; justify-items: center; }
+  .cta {
+    display: inline-flex; align-items: center; gap: .6rem;
+    background: var(--qaf); color: var(--ivory);
+    padding: .95rem 2.1rem; text-decoration: none;
+    font-size: .78rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase;
+    border: 1px solid var(--qaf);
+    transition: background .3s ease, color .3s ease, transform .3s ease;
+  }
+  .cta:hover { background: transparent; color: var(--qaf); transform: translateY(-1px); }
+  .cta .arrow { transition: transform .3s ease; }
+  .cta:hover .arrow { transform: translateX(3px); }
+  .cta-note { font-size: .8rem; font-style: italic; color: var(--qaf-soft); }
+  @media (max-width: 480px) { .cta { width: 100%; justify-content: center; padding: 1rem 1.2rem; } }
   .powered { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--qaf-soft); opacity: .7; }
 
 
@@ -356,6 +372,13 @@
     <div class="row"><span class="when">Sat · Sep 5</span><span class="what">Launch at the Community BBQ</span></div>
     <div class="row"><span class="when">Fri · Sep 11</span><span class="what">Opening program — Niyyah</span></div>
     <div class="row"><span class="when">Sun · Sep 13</span><span class="what">First full week of classes</span></div>
+  </div>
+
+  <div class="cta-wrap rise d7">
+    <a class="cta" href="https://www.icebnj.net/qaf-circle-commitment/" rel="noopener">
+      Register for Fall 2026 <span class="arrow" aria-hidden="true">&rarr;</span>
+    </a>
+    <p class="cta-note">Circles run September 13 to December 20. Come as you are.</p>
   </div>
 
   <div class="foot rise d7">
