@@ -2,5 +2,6 @@ User-Agent: *
 Allow: /
 Disallow: /t/
 Disallow: /portal/
+Disallow: /admin/
 
 Sitemap: https://qaf.icebnj.net/sitemap.xml
